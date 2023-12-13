@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search for a Teacher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+        }
+
+        #searchResult {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search for a Teacher</h1>
+
+    <form id="searchForm">
+        <label for="searchFullName">Search by Full Name:</label>
+        <input type="text" id="searchFullName" name="searchFullName"><br>
+
+        <button type="button" onclick="searchTeacher()">Search</button>
+    </form>
+
+    <div id="searchResult"></div>
+
+    <button onclick="window.location.href='home.html'">Back to Home</button>
+
+    <script>
+        function searchTeacher() {
+            const searchFullName = document.getElementById('searchFullName').value;
+
+            // Assuming you have an API endpoint to search for a teacher
+            fetch(`/api/search_teacher?fullName=${searchFullName}`)
+                .then(response => response.json())
+                .then(teacher => {
+                    const resultContainer = document.getElementById('searchResult');
+                    resultContainer.innerHTML = ''; // Clear previous results
+
+                    if (teacher) {
+                        resultContainer.textContent = `Full Name: ${teacher.full_name}, Age: ${teacher.age}, Date of Birth: ${teacher.dob}, Number of Classes: ${teacher.num_classes}`;
+                    } else {
+                        resultContainer.textContent = 'Teacher not found.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>

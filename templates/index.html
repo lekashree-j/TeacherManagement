@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        button {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #04AA6D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.4s;
+        }
+
+        button:hover {
+            background-color: #007B4F;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Teacher Management</h1>
+        <div class="button-container">
+            <button onclick="location.href='show'">Show </button>
+            <button onclick="location.href='add'">Add </button>
+            <button onclick="location.href='filter'">Filter </button>
+            <button onclick="location.href='search'">Search </button>
+            <button onclick="location.href='update'">Update</button>
+            <button onclick="location.href='delete'">Delete</button>
+        </div>
+    </div>
+</body>
+</html>

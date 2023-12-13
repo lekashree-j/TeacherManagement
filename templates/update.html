@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update a Teacher's Record</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Update a Teacher's Record</h1>
+
+    <form id="updateForm">
+        <label for="updateFullName">Full Name:</label>
+        <input type="text" id="updateFullName" name="updateFullName" required><br>
+
+        <label for="updateAge">Age:</label>
+        <input type="number" id="updateAge" name="updateAge" required><br>
+
+        <label for="updateDob">Date of Birth:</label>
+        <input type="text" id="updateDob" name="updateDob" required><br>
+
+        <label for="updateNumClasses">Number of Classes:</label>
+        <input type="number" id="updateNumClasses" name="updateNumClasses" required><br>
+
+        <button type="button" onclick="updateTeacher()">Update Record</button>
+    </form>
+
+    <button onclick="window.location.href='home.html'">Back to Home</button>
+
+    <script>
+        function updateTeacher() {
+            const updateFullName = document.getElementById('updateFullName').value;
+            const updateAge = document.getElementById('updateAge').value;
+            const updateDob = document.getElementById('updateDob').value;
+            const updateNumClasses = document.getElementById('updateNumClasses').value;
+
+            // Assuming you have an API endpoint to update a teacher's record
+            fetch('/api/update_teacher', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fullName: updateFullName,
+                    age: updateAge,
+                    dob: updateDob,
+                    numClasses: updateNumClasses,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the server
+                alert('Teacher record updated successfully!');
+                // You can redirect to another page or update the DOM as needed
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to update teacher record. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>

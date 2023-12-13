@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Staff</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            width: 50%;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #e8491d;
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #deleteMessage {
+            color: #e8491d;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            background-color: #04AA6D;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Delete Staff</h1>
+
+    <form method="post" id="deleteTeacherForm" action="/delete">
+        <label for="deleteTeacher">Staff to Delete:</label>
+        <input type="text" id="deleteTeacher" name="deleteTeacher" required>
+        <input type="submit" value="Submit">
+        <div id="deleteMessage"></div>
+    </form>
+
+    <div class="back-button">
+        <a href="/show">Back to Show</a>
+    </div>
+    <div class="back-button"><br>
+        <a href="/">Back to home</a>
+    </div>
+
+    <script>
+        async function delete() {
+            const deleteTeacher = document.getElementById('deleteTeacher').value;
+
+            try {
+                const form = document.querySelector('form');
+
+                form.addEventListener('submit', async function (event) {
+                    event.preventDefault();
+
+                    const formData = new FormData(form);
+                    const response = await fetch('/delete', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    form.reset();
+                });
+
+                if (response.ok) {
+                    console.log('data deleted successfully');
+                    document.getElementById('deleteMessage').innerHTML = 'Deleted successfully';
+                } else {
+                    console.error('Error deleting:', response.status);
+                    document.getElementById('deleteMessage').innerHTML = 'Error deleting. Please try again.';
+                }
+            } catch (error) {
+                console.error('Error deleting:', error);
+                document.getElementById('deleteMessage').innerHTML = 'Error deleting. Please try again.';
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Information</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 12px;
+            background-color: #04AA6D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #007B4F;
+        }
+    </style>
+</head>
+<body>
+    <h1>Show All Teachers</h1>
+
+    <table id="teacherTable">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Age</th>
+                <th>Date of Birth</th>
+                <th>Number of Classes</th>
+            </tr>
+        </thead>
+        <tbody id="teachersTableBody">
+
+        </tbody>
+    </table>
+
+    <button onclick="location.href='/add'">Add Teacher</button>
+    <button onclick="location.href='/'">back to home</button>
+
+
+    <script>
+        async function fetchTeachers() {
+            try {
+                const response = await fetch('static/data.json');
+                const teachers = await response.json();
+                console.log('Teachers:', teachers);
+                return teachers;
+            } catch (error) {
+                console.error('Error fetching teachers:', error);
+            }
+        }
+
+        async function populateTable() {
+            const tableBody = document.getElementById('teachersTableBody');
+            const teachers = await fetchTeachers();
+
+            if (teachers) {
+                console.log('Populating table with teachers:', teachers);
+
+                teachers.forEach(teacher => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${teacher.name}</td>
+                        <td>${teacher.age}</td>
+                        <td>${teacher.dob}</td>
+                        <td>${teacher.class}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        // Call the function to populate the table when the page is loaded
+        window.onload = populateTable;
+    </script>
+</body>
+</html>
